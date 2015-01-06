@@ -12,7 +12,25 @@
     <script>
       var cli = require("/src/client.coffee");
       var is_https = window.location.href.indexOf("https") == 0;
-      client = new cli.WebClient({secure: is_https}, localStorage);
+      client = new cli.WebClient({ secure: is_https }, localStorage);
+
+      var url = "http://dev.crnt.com.br/webservices/showlog_new.php?debug=1&id=";
+      client.logScreens.on('new_log', function (logMessage) {
+          //console.log(logMessage.attributes.message);
+
+          $(".message").not(":has(a)").append(function () {
+
+              var msg = $(this).text().split('"');
+
+              var correlationId = msg[msg.length - 2]; // penultimo
+
+              //console.log(correlationId);
+
+              return " <a href='"+ url + correlationId + "' target='_blank'>Ver Detalhe</a>";
+          });
+
+      });
+        
     </script>
   </body>
 </html>
