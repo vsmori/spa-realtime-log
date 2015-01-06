@@ -6,31 +6,39 @@
     <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
     <link href="lib/log.io.css" rel="stylesheet">
   </head>
-  <body>
+<body>
     <div id="web_client"></div>
+    
+    <script src="https://github.com/jackmoore/colorbox/blob/master/jquery.colorbox-min.js"></script>
+    <style>
+        .iframe {
+             color: #0c0;
+         }
+    </style>
     <script src="lib/log.io.js"></script>
     <script>
-      var cli = require("/src/client.coffee");
-      var is_https = window.location.href.indexOf("https") == 0;
-      client = new cli.WebClient({ secure: is_https }, localStorage);
+        var cli = require("/src/client.coffee");
+        var is_https = window.location.href.indexOf("https") == 0;
+        client = new cli.WebClient({ secure: is_https }, localStorage);
 
-      var url = "http://dev.crnt.com.br/webservices/showlog_new.php?debug=1&id=";
-      client.logScreens.on('new_log', function (logMessage) {
-          //console.log(logMessage.attributes.message);
+        var url = "http://dev.crnt.com.br/webservices/showlog_new.php?debug=1&id=";
+        client.logScreens.on('new_log', function (logMessage) {
+            //console.log(logMessage.attributes.message);
 
-          $(".message").not(":has(a)").append(function () {
+            $(".message").not(":has(a)").append(function () {
 
-              var msg = $(this).text().split('"');
+                var msg = $(this).text().split('"');
 
-              var correlationId = msg[msg.length - 2]; // penultimo
+                var correlationId = msg[msg.length - 2]; // penultimo
 
-              //console.log(correlationId);
+                //console.log(correlationId);
 
-              return " <a href='"+ url + correlationId + "' target='_blank'>Ver Detalhe</a>";
-          });
+                return " <a href='" + url + correlationId + "' target='_blank' class='iframe'>DETALHE</a>";
+            });
 
-      });
-        
+        });
+
+        $(".iframe").colorbox({ iframe: true, width: "80%", height: "80%" });
     </script>
-  </body>
+</body>
 </html>
