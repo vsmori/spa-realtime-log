@@ -17,25 +17,22 @@
         var is_https = window.location.href.indexOf("https") == 0;
         client = new cli.WebClient({ secure: is_https }, localStorage);
 
-        var url = "";
         client.logScreens.on('new_log', function (logMessage) {
-            console.log(logMessage);
-            console.log(logMessage.attributes.message);
-            console.log(logMessage.attributes.stream.id);
+            //console.log(logMessage);
+            //console.log(logMessage.attributes.message);
+            //console.log(logMessage.attributes.stream.id);
 
-            $(".message").not(":has(a)").append("&nbsp;", function () {
+            $(".message").not(":has(a)").append(function () {
 
                 var msg = $(this).text().split('"');
                 var correlationId = msg[msg.length - 2]; // penultimo
                 //console.log(correlationId);
 
                 var logStream = $(this).parent().find('.stream').text();
-                console.log(logStream);
-
-                var params = 'id=' + correlationId + '&logStream=' + logStream;
+                //console.log(logStream);
 
                 return $('<a/>', {
-                    href: '/show_detail?'+ params,
+                    href: '/show_detail/' + logStream + '/' + correlationId,
                     style: 'color: #0c0;',
                     html: 'DETALHE'
                 }).colorbox({ iframe: true, width: "85%", height: "85%" });
