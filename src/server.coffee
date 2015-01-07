@@ -213,7 +213,7 @@ class WebServer
                 pathTest = config.logStreams.processflow[0]
                 pathTest2 = @logStreams.processflow[0]
                 
-                res.end "<html><pre>" + content + pathTest + pathTest2 "</pre></html>", "utf-8"
+                res.end "<html><pre>" + content + pathTest + pathTest2 + "</pre></html>", "utf-8"
               return
 
           else
