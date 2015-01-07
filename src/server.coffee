@@ -198,7 +198,26 @@ class WebServer
           return res.send 403, "Your IP (#{req.ip}) is not allowed."
         next()
     app.use '/show_detail', (req, res, next) => 
-        res.send "AQUI DETALHES!!! <br/> ID = #{req.query.id} <br/> LogStream = #{req.query.logStream}"       
+        #res.send "AQUI DETALHES!!! <br/> ID = #{req.query.id} <br/> LogStream = #{req.query.logStream}"
+        filePath = "/var/log/processflow.dtouch.com.br/#{req.query.id}.txt";
+        fs.exists filePath, (exists) ->
+          if exists
+            fs.readFile filePath, (error, content) ->
+              if error
+                res.writeHead 500
+                res.end()
+              else
+                res.writeHead 200,
+                  "Content-Type": "text/html"
+
+                res.end content, "utf-8"
+              return
+
+          else
+            res.writeHead 404
+            res.end()
+          return                       
+              
     staticPath = config.staticPath ? __dirname + '/../'
     app.use express.static staticPath
     
