@@ -200,6 +200,7 @@ class WebServer
     app.use '/show_detail', (req, res, next) => 
         #res.send "AQUI DETALHES!!! <br/> ID = #{req.query.id} <br/> LogStream = #{req.query.logStream}"
         filePath = "/var/log/processflow.dtouch.com.br/#{req.query.id}.txt";
+        
         fs.exists filePath, (exists) ->
           if exists
             fs.readFile filePath, (error, content) ->
@@ -207,10 +208,9 @@ class WebServer
                 res.writeHead 500
                 res.end()
               else
-                res.writeHead 200,
-                  "Content-Type": "text/html"
+                res.writeHead 200, "Content-Type": "text/html"
 
-                res.end content, "utf-8"
+                res.end "<html><pre>" + content + "</pre></html>", "utf-8"
               return
 
           else
