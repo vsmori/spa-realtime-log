@@ -32,7 +32,7 @@
                 //console.log(logStream);
 
                 return $('<a/>', {
-                    href: '/show_detail/' + logStream + '/' + correlationId,
+                    href: '/show_detail?id=' + correlationId + '&logStream=' + logStream,
                     style: 'color: #0c0;',
                     html: 'DETALHE'
                 }).colorbox({ iframe: true, width: "85%", height: "85%" });
