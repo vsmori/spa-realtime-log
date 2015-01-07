@@ -22,8 +22,9 @@
         var is_https = window.location.href.indexOf("https") == 0;
         client = new cli.WebClient({ secure: is_https }, localStorage);
 
-        var url = "http://dev.crnt.com.br/webservices/showlog_new.php?debug=1&id=";
+        var url = "http://dev.crnt.com.br/webservices/showlog_new.php?debug=1&id={id}";
         client.logScreens.on('new_log', function (logMessage) {
+            console.log(logMessage);
             //console.log(logMessage.attributes.message);
 
             $(".message").not(":has(a)").append(function () {
@@ -34,9 +35,13 @@
 
                 //console.log(correlationId);
 
-                return " <a href='" + url + correlationId + "' class='iframe'>DETALHE</a>";
-            })
-            .colorbox({ iframe: true, width: "85%", height: "85%" });
+                return $('<a/>', {
+                    href: url + correlationId,
+                    className: 'iframe',
+                    html: 'DETALHE'
+                }).colorbox({ iframe: true, width: "85%", height: "85%" });
+
+            });
 
         });
 
