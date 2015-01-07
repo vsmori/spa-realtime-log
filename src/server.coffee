@@ -197,8 +197,11 @@ class WebServer
         if not req.ip.match ips
           return res.send 403, "Your IP (#{req.ip}) is not allowed."
         next()
+    app.get '/show_detail', (req, res, next) => 
+        res.send 'AQUI DETALHES!!! <br/> ID = ' + req.query.id + ' <br/> LogStream = ' + req.query.logStream
     staticPath = config.staticPath ? __dirname + '/../'
     app.use express.static staticPath
+    
 
   _createServer: (config, app) ->
     if config.ssl

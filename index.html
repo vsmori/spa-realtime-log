@@ -10,11 +10,6 @@
 <body>
     <div id="web_client"></div>
     
-    <style>
-        .iframe {
-             color: #0c0;
-         }
-    </style>
     <script src="lib/log.io.js"></script>
     <script src="ext/jquery.colorbox-min.js"></script>
     <script>
@@ -22,30 +17,32 @@
         var is_https = window.location.href.indexOf("https") == 0;
         client = new cli.WebClient({ secure: is_https }, localStorage);
 
-        var url = "http://dev.crnt.com.br/webservices/showlog_new.php?debug=1&id={id}";
+        var url = "";
         client.logScreens.on('new_log', function (logMessage) {
             console.log(logMessage);
-            //console.log(logMessage.attributes.message);
+            console.log(logMessage.attributes.message);
+            console.log(logMessage.attributes.stream.id);
 
-            $(".message").not(":has(a)").append(function () {
+            $(".message").not(":has(a)").append("&nbsp;", function () {
 
                 var msg = $(this).text().split('"');
-
                 var correlationId = msg[msg.length - 2]; // penultimo
-
                 //console.log(correlationId);
 
+                var logStream = $(this).parent().find('.stream').text();
+                console.log(logStream);
+
+                var params = 'id=' + correlationId + '&logStream=' + logStream;
+
                 return $('<a/>', {
-                    href: url + correlationId,
-                    className: 'iframe',
+                    href: '/show_detail?'+ params,
+                    style: 'color: #0c0;',
                     html: 'DETALHE'
                 }).colorbox({ iframe: true, width: "85%", height: "85%" });
 
             });
 
         });
-
-        //$(".iframe");
     </script>
 </body>
 </html>
