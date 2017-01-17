@@ -32,6 +32,8 @@
     "log.io-harvester": "./bin/log.io-harvester"
   },
   "scripts": {
+    "dev": "concurrently --kill-others \"./bin/log.io-server\" \"./bin/log.io-harvester\"",
+    "start": "node index.js",
     "prepublish": "cake build",
     "postinstall": "cake ensure:configuration"
   }
