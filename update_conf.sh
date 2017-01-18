@@ -1,2 +1,9 @@
 #!/usr/bin/env bash
-cp conf/harvester_ws.conf ~/.log.io/harvester.conf
+
+if [ -z "$1" ]
+  then
+    echo "No argument supplied"
+    exit
+fi
+
+cp conf/harvester_$1.conf ~/.log.io/harvester.conf
